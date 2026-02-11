@@ -1,10 +1,8 @@
 package com.example.feishu_api.controller;
 import com.example.feishu_api.common.R;
+import com.example.feishu_api.entity.User;
 import com.example.feishu_api.service.UserService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
@@ -19,5 +17,15 @@ public class UserController {
     public R<String> login(@RequestParam String username,
                            @RequestParam String password) {
         return userService.login(username, password);
+    }
+
+    @PostMapping("/register")
+    public R<String> register(@RequestBody User user) {
+        return userService.register(user);
+    }
+
+    @GetMapping("/info")
+    public R<User> info(@RequestHeader("token") String token) {
+        return userService.getCurrentUser(token);
     }
 }
